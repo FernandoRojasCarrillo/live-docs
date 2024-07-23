@@ -1,4 +1,5 @@
 import AddDocumentBtn from "@/components/AddDocumentBtn";
+import { DeleteModal } from "@/components/DeleteModal";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { getDocuments } from "@/lib/actions/room.action";
@@ -10,11 +11,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const Home = async () => {
-  const cleckUser = await currentUser();
-  if (!cleckUser) redirect("/sign-in");
+  const clerkUser = await currentUser();
+  if (!clerkUser) redirect("/sign-in");
 
   const roomDocument = await getDocuments(
-    cleckUser.emailAddresses[0].emailAddress
+    clerkUser.emailAddresses[0].emailAddress
   );
 
   return (
@@ -33,38 +34,46 @@ const Home = async () => {
           <div className="document-list-title">
             <h3 className="text-28-semibold">All documents</h3>
             <AddDocumentBtn
-              userId={cleckUser.id}
-              email={cleckUser.emailAddresses[0].emailAddress}
+              userId={clerkUser.id}
+              email={clerkUser.emailAddresses[0].emailAddress}
             />
           </div>
 
           <ul className="document-ul">
-            {roomDocument.data.map(({ id, metadata, createdAt }: any) => (
-              <li key={id} className="document-list-item">
-                <Link
-                  href={`/documents/${id}`}
-                  className="flex flex-1 items-center gap-4"
-                >
-                  <div className="hidden rounded-md bg-dark-500 p-2 sm:block">
-                    <Image
-                      src="/assets/icons/doc.svg"
-                      alt="file"
-                      width={40}
-                      height={40}
-                    />
-                  </div>
+            {roomDocument.data.map(({ id, metadata, createdAt, usersAccesses }: any) => {
+              const currentUserType = usersAccesses[
+                clerkUser.emailAddresses[0].emailAddress
+              ]?.includes("room:write")
+                ? "editor"
+                : "viewer";
 
-                  <div className="space-y-1">
-                    <p className="line-clamp-1 text-lg">{metadata.title}</p>
-                    <p className="text-sm font-light text-blue-100">
-                      Created about {dateConverter(createdAt)}
-                    </p>
-                  </div>
-                </Link>
-
-                {/* TODO: Delete Button  */}
-              </li>
-            ))}
+              return (
+                  <li key={id} className="document-list-item">
+                    <Link
+                      href={`/documents/${id}`}
+                      className="flex flex-1 items-center gap-4"
+                    >
+                      <div className="hidden rounded-md bg-dark-500 p-2 sm:block">
+                        <Image
+                          src="/assets/icons/doc.svg"
+                          alt="file"
+                          width={40}
+                          height={40}
+                        />
+                      </div>
+    
+                      <div className="space-y-1">
+                        <p className="line-clamp-1 text-lg">{metadata.title}</p>
+                        <p className="text-sm font-light text-blue-100">
+                          Created about {dateConverter(createdAt)}
+                        </p>
+                      </div>
+                    </Link>
+    
+                    {currentUserType === "editor" && <DeleteModal roomId={id} />}
+                  </li>
+              )
+            })}
           </ul>
         </div>
       ) : (
@@ -78,8 +87,8 @@ const Home = async () => {
           />
 
           <AddDocumentBtn
-            userId={cleckUser.id}
-            email={cleckUser.emailAddresses[0].emailAddress}
+            userId={clerkUser.id}
+            email={clerkUser.emailAddresses[0].emailAddress}
           />
         </div>
       )}
