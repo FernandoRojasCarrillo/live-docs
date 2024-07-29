@@ -67,9 +67,9 @@ export const updateDocument = async (roomId: string, title: string) => {
       },
     });
 
-    revalidatePath(`/document/${roomId}`);
+    // revalidatePath(`/document/${roomId}`);
 
-    return parseStringify(updateDocument);
+    return parseStringify(updatedRoom);
   } catch (error) {
     console.log(`Error happend while updating the room ${error}`);
   }
