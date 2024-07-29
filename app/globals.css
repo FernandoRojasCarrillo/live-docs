@@ -35,8 +35,10 @@
   }
 }
 
-.commets-container {
-  width: 100%;
+@media (max-width: 640px) {
+  .commets-container {
+    width: 100%;
+  }
 }
 
 @layer utilities {
