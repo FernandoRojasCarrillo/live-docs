@@ -35,6 +35,10 @@
   }
 }
 
+.commets-container {
+  width: 100%;
+}
+
 @layer utilities {
   .text-28-semibold {
     @apply text-[28px] font-semibold;
@@ -187,6 +191,10 @@
   background: #060d18;
   box-shadow: none;
   padding: 20px;
+}
+
+.cl-footerActionLink {
+  flex: none;
 }
 
 .cl-socialButtonsBlockButton,

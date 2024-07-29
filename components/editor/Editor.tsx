@@ -9,7 +9,13 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-import { FloatingComposer, FloatingThreads, LiveblocksPlugin, liveblocksConfig, useEditorStatus } from "@liveblocks/react-lexical";
+import {
+  FloatingComposer,
+  FloatingThreads,
+  LiveblocksPlugin,
+  liveblocksConfig,
+  useEditorStatus,
+} from "@liveblocks/react-lexical";
 import React from "react";
 import Loader from "../Loader";
 
@@ -34,7 +40,7 @@ export function Editor({
   currentUserType: UserType;
 }) {
   const status = useEditorStatus();
-  const {threads } = useThreads()
+  const { threads } = useThreads();
 
   const initialConfig = liveblocksConfig({
     namespace: "Editor",
@@ -73,11 +79,11 @@ export function Editor({
             </div>
           )}
 
-          <LiveblocksPlugin>
-            <FloatingComposer className="w-[350px] " />
-            <FloatingThreads threads={threads} />
-            <Commets />
-          </LiveblocksPlugin>
+            <LiveblocksPlugin>
+              <FloatingComposer className="max-w-[350px] " />
+              <FloatingThreads threads={threads} />
+              <Commets />
+            </LiveblocksPlugin>
         </div>
       </div>
     </LexicalComposer>

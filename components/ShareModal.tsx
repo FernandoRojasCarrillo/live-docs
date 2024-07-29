@@ -47,7 +47,7 @@ const ShareModal = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
+      <DialogTrigger >
         <Button
           className="gradient-blue flex h-9 gap-1 px-4"
           disabled={currentUserType !== "editor"}
@@ -65,7 +65,7 @@ const ShareModal = ({
 
       <DialogContent className="shad-dialog">
         <DialogHeader>
-          <DialogTitle>Manae who can view this project</DialogTitle>
+          <DialogTitle>Manage who can view this project</DialogTitle>
           <DialogDescription>
             Select which users can view and edit this document
           </DialogDescription>
