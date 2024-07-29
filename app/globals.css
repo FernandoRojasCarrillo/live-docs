@@ -129,7 +129,7 @@
   }
 
   .collaborators-list {
-    @apply hidden items-center justify-end -space-x-3 overflow-hidden sm:flex;
+    @apply hidden items-center justify-end -space-x-3 sm:flex;
   }
 
   .share-input {
